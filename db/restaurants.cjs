@@ -4,9 +4,10 @@ const createRestaurants = async(restaurantName) => {
   try{
     const { rows } = await client.query(`
       INSERT INTO restaurants (name)
-      VALUES ('${restaurantName}');
+      VALUES ('${restaurantName}')
+      RETURNING id;
       `);
-
+        
       const restaurant = rows[0];
       return restaurant;
   } catch (err) {
