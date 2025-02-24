@@ -5,7 +5,7 @@ const createCustomers = async (customerName) => {
     const { rows } = await client.query(`
       INSERT INTO customers (name)
       VALUES ( '${customerName}')
-      RETURNING *;
+      RETURNING id;
       `);
 
     const customer = rows[0];
@@ -14,4 +14,13 @@ const createCustomers = async (customerName) => {
     console.log(err);
   }
 }
-module.exports = { createCustomers };
+
+const getAllCustomers = async() => {
+  const { rows: hungryCustomers } = await client.query(`
+    SELECT * FROM customers;
+    `)
+
+    return hungryCustomers;
+}
+module.exports = { createCustomers,
+  getAllCustomers };
